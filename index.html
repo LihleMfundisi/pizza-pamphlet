@@ -7,10 +7,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfect Pizza</title>
     <link rel="stylesheet" href="style.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+
 </head>
 
 <body>
+    <div class="container" x-data="{
+         showCart:false,
+          SmallPizzaTotal: 0.00, 
+          SmallPizzaQty: 0,
+           MediumPizzaTotal: 0.00, 
+           MediumPizzaQty: 0,
+            LargePizzaTotal: 0.00, 
+            LargePizzaQty: 0,
+            payNow: false,
+            payAmount: 0,
+            paymentMessage: '',
+
+
+            cartTotal() {
+                return this.SmallPizzaTotal + this.MediumPizzaTotal + this.LargePizzaTotal
+            },
+
+             cartQtyTotal() {
+                return this.SmallPizzaQty + this.MediumPizzaQty + this.LargePizzaQty
+             },
+             buySmallPizza() {
+                this.SmallPizzaTotal +=49.00;
+                 this.SmallPizzaQty +=1
+             },
+             clearSmallPizza() {
+                if (this.SmallPizzaQty > 0) {
+                this.SmallPizzaTotal -=49.00;
+                 this.SmallPizzaQty -=1}
+             },
+             buyMediumPizza() {
+                this.MediumPizzaTotal +=90.00; 
+                this.MediumPizzaQty +=1
+             },
+             clearMediumPizza() {
+                if (this.MediumPizzaQty > 0) {
+                this.MediumPizzaTotal -=90.00; 
+                this.MediumPizzaQty -=1}
+             },
+             buyLargePizza() {
+                this.LargePizzaTotal +=130.00;
+                this.LargePizzaQty +=1
+             },
+             clearLargePizza() {
+                if (this.LargePizzaQty > 0) {
+                this.LargePizzaTotal -=130.00;
+                this.LargePizzaQty -=1 }
+             },
+             makePayment() {
+                if (this.paymentamount ===0) {
+                    this.paymentMessage = 'no amount entered!'
+                }
+             } 
+
+      }">
+    
+        
     <h1 class="Header">Perfect Pizza</h1>
+
+
+    <div class="Cart-box">
+        <div class="cart" x-show="showCart" >
+        
+    <table>
+    
+       <!-- <caption><button x-on:clicks="closeCart=false"> Close</button></caption> -->
+        <div class="add_to_cart">
+            <button type="button" name="button" x-on:click="showCart=false"> Close Cart</button>
+        </div>
+     
+        <tr x-show="SmallPizzaQty > 0">
+            <td> Small Pizza <img src="Pizza-yam.jpg" width="29" alt=""></td>
+            <td>
+                <span x-text="SmallPizzaQty"></span>
+                <button x-on:click="buySmallPizza">+</button> <button x-on:click="clearSmallPizza" x-show="SmallPizzaQty > 0 ">-</button> </td> 
+            <td >
+                R<span  x-text="SmallPizzaTotal.toFixed(2)"></span>
+
+            </td>
+        </tr>
+        <tr x-show="MediumPizzaQty > 0"> 
+            <td>Medium Pizza <img src="Pizza-yam.jpg" width="38" alt=""></td>
+            <td>
+                <span x-text="MediumPizzaQty"></span>
+             <button x-on:click="buyMediumPizza">+</button> <button x-on:click="clearMediumPizza" x-show="MediumPizzaQty > 0">-</button></td> 
+            <td> 
+                R<span x-text="MediumPizzaTotal.toFixed(2)"></span>
+            </td>
+        </tr>
+        <tr x-show="LargePizzaQty > 0">
+            <td>Large Pizza <img src="Pizza-yam.jpg" width="50" alt=""></td>
+            <td>
+                <span x-text="LargePizzaQty"></span>
+            <button x-on:click="buyLargePizza">+</button> <button x-on:click="clearLargePizza" x-show="LargePizzaQty">-</button> </td> 
+            <td> 
+              R<span x-text="LargePizzaTotal.toFixed(2)"></span>  
+            </td>
+        </tr>
+        <tr x-show="cartTotal() > 0">
+            <td>Total:</td>
+            <td>  </td>
+            <td>
+                R<span x-text="cartTotal().toFixed(2)"> </span>
+        </tr>
+        <tr>
+            <div class="Message" x-text="paymentMessage">Message....</div>
+            <!--<div x-show="payNow">-->
+                <div>
+                <div class="payout" x-show="payNow">
+                    <button>payNow</button>
+                    <td> <button x-on:click="payNow=true" x-show="!payNow">Pay</button>
+                    
+                     <form>
+                       <input type="number" placeholder="Payment amount" x-model="paymentAmount">
+                    </form> </td>
+                    </div>
+            </div>
+            
+    
+
+            </div>
+        </tr>
+
+    </table>
+    </div>
+
+
+
 
     <div class="pizzas"> 
     
@@ -19,34 +147,52 @@
     
         
             <h3>Small Pizza</h3>
-            <img src="Pizza-yam.jpg" width="125" alt="">;
-            <h3>R49.00</h3> 
+            <img src="Pizza-yam.jpg" width="125" alt="">
+            <h3>R49.00</h3>
             <div>Yile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi Ayimnandi Yile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi AyimnandiYile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi AyimnandiYile Pizza bantabam!</div>
-            
+            <div class="button_s">
+            <button x-on:click="buySmallPizza()">BUY</button> 
+            </div>
         </div>
     
         <div class="pizza Medium_pizza">
             <h2>Medium Pizza</h2>
-            <img src="Pizza-yam.jpg" width="155" alt="">;
+            <img src="Pizza-yam.jpg" width="155" alt="">
             <h3>R90.00</h3>
             <div> Yile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi Ayimnandi Yile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi AyimnandiYile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi AyimnandiYile Pizza bantabam!</div>
-    
+            <div class="button_m">
+            <button x-on:click="buyMediumPizza()">BUY</button>
+            </div>
         </div>
         <div class="pizza Large_pizza">
             <h2>Large Pizza</h2>
-            <img src="Pizza-yam.jpg" width="200" alt="">;
+            <img src="Pizza-yam.jpg" width="200" alt="">
             <h3>R130.00</h3>
             <div>Yile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi Ayimnandi Yile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi AyimnandiYile Pizza bantabam!Ayimnandi Ayimnandi Ayimnandi AyimnandiYile Pizza bantabam!</div>
-    
+            <div class="button_l">
+            <button x-on:click="buyLargePizza()">BUY</button>
+            </div>
+       <!--<div class="cart">
+        <img src="">
+        </div>
+    -->
+            
+
             
         </div>
     </div>
+    <div class="add_to_cart">
+        <button type="button" name="button" x-on:click="showCart=true"> Show Cart</button>
+        <strong x-show= "cartQtyTotal() > 0 "> <span x-text="cartQtyTotal()"> </span>    Items </strong>
+    </div>
+
 
 <div class="Contact_us">
     <h2>Contact details</h2>
     Contact us at: 011 340 7133 info@perfectpizza.co.za
 
 </div>
+    </div>
 
 </body>
 
