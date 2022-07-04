@@ -17,10 +17,13 @@ body {
     background-color: #f5e12f;
     height: 50px;
 }
+.showButton {
+    display: flex;
+    justify-content: space-between;
+}
 .Cart-box {
     width: 400px;
     background-color: rgb(255, 229, 79);
-    right:
 }
   
 table {
